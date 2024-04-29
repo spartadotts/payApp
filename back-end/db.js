@@ -1,7 +1,8 @@
 const { request } = require("express");
 const mongoose = require("mongoose")
 
-mongoose.connect("mongodb+srv://kmax1:keshaviscool06@cluster1.51eaeh2.mongodb.net/payApp");
+const url = process.env.conn_url;
+mongoose.connect(url);
 
 const UserSchema = new mongoose.Schema({
     username: {
