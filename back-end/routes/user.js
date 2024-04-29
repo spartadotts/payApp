@@ -45,9 +45,40 @@ app.post("/signup", async (req,res)=>{
     const token = jwt.sign({userid},jwt_secret);
 
     res.json({
-        msg: "User created successfully"
+        msg: "User created successfully",
+        token: token
     })
 });
+
+const signinBody = zod.object({
+    username: zod.string().email(),
+    password: zod.string()
+})
+
+router.post("/signin", async (req,res)=>{
+    const success = signinBody.safeParse(req.body)
+    if(!success){
+        return res.status(411).json({
+            msg: 'Error in inputs'
+        })
+    }
+
+    const user =  await User.findOne({
+        username: req.body.username,
+        password: req.body.password
+    })
+
+    if(user){
+        const token = jwt.sign({
+            userid:user._id
+        },jwt_secret)
+
+        res.json({
+            token: token
+        })
+        return
+    }
+})
 
 
 
