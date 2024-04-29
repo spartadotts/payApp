@@ -2,7 +2,7 @@ const express = require("express");
 const { Accounts } = require("../db");
 const { authMiddleware } = require("../middleware");
 const app = express();
-const router = new express.Router();
+const router = express.Router();
 
 
 
@@ -54,6 +54,4 @@ router.post("/transfer", authMiddleware,async (req,res)=>{
     });
 });
 
-module.exports = {
-    router
-}
+module.exports = router;

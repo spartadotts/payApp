@@ -1,7 +1,6 @@
 const express = require("express")
-const router = new express.Router();
-const app = express();
 const zod = require("zod");
+const router = express.Router();
 const mongoose = require("mongoose");
 const { User, Accounts } = require("../db");
 const jwt  = require("jsonwebtoken");
@@ -16,7 +15,8 @@ const signupBody = zod.object({
 });
 
 router.post("/signup", async (req,res)=>{
-    const {sucess} = signupBody.safeParse(req.body);
+    const {sucess} = signupBody.safeParse(req.body)
+    console.log(sucess)
     if(!sucess){
         return res.status(411).json({
             msg: "Email already taken / Incorrect inputs"
@@ -140,9 +140,7 @@ router.get("/bulk", async (req,res)=>{
     })
 })
 
-module.exports={
-    router
-}
+module.exports= router
 
 
 

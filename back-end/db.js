@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema, number } = require("zod");
 
 const url = process.env.conn_url;
-mongoose.connect(url);
+mongoose.connect("mongodb+srv://kmax1:keshaviscool06@cluster1.51eaeh2.mongodb.net/payApp");
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     password:{
         type: String,
         required:true,
-        minLength:8 
+        minLength:8
     },
     firstname:{
         type: String,
@@ -39,12 +39,12 @@ const User = mongoose.model("User",UserSchema);
 
 const accountSchema = new mongoose.Schema({
     userid: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
     balance:{
-        type: number,
+        type: Number,
         required: true
     }
 })
