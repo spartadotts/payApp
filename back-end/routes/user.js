@@ -42,7 +42,7 @@ router.post("/signup", async (req,res)=>{
     })
 
     const userid = user._id;
-
+//assigning random balance
     await Accounts.create({
         userid,
         balance: 1+Math.random()*1000
