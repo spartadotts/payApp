@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const { User } = require("../db");
 const jwt  = require("jsonwebtoken");
 const { jwt_secret } = require("../config");
+const { authMiddleware } = require("../middleware");
 
 const signupBody = zod.object({
     username: zod.string().email(),
@@ -14,7 +15,7 @@ const signupBody = zod.object({
     lastname: zod.string()
 });
 
-app.post("/signup", async (req,res)=>{
+router.post("/signup", async (req,res)=>{
     const {sucess} = signupBody.safeParse(req.body);
     if(!sucess){
         return res.status(411).json({
@@ -80,7 +81,33 @@ router.post("/signin", async (req,res)=>{
     }
 })
 
+const updateBody = zod.object({
+    password: zod.string().optional(),
+    firstname: zod.string().optional(),
+    lastname: zod.string().optional()
+})
 
+router.put("/",authMiddleware,async (req,res)=>{
+    const {success} = updateBody.safeParse(req.body);
+
+    if(!success){
+        return res.status(411).json({
+            msg: "Error while updating"
+        })
+    }
+
+    await User.updateOne({
+        _id: req.userid
+    },req.body)
+
+    res.json({
+        msg: "User updated successfully"
+    })
+
+
+
+
+})
 
 
 module.exports={
