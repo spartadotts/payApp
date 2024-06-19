@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema, number } = require("zod");
 
 const url = process.env.conn_url;
-mongoose.connect("mongodb+srv://kmax1:keshaviscool06@cluster1.51eaeh2.mongodb.net/payApp");
+mongoose.connect("DATABASE_URL");
 
 const UserSchema = new mongoose.Schema({
     username: {
